@@ -1,0 +1,38 @@
+= Smart Cities with Red Hat Cloud Services Deployment Guide 
+:sectnums:
+:sectnumlevels: 2
+:toc:
+
+== Requirements 
+
+== Manual Install 
+
+=== Kafka 
+
+We will use Red Hat OpenShift Streams for Apache Kafka (RHOSAK), a managed cloud service from Red Hat, so we can quickly get started without focusing on the installation and self-management of Kafka clusters.
+
+Red Hat OpenShift Streams for Apache Kafka's product documentation page contains the latest information on this service and is the source of truth for RHOSAK. We will modify excerpts from the following documentation links below. 
+
+*Links:*
+
+* https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1[Product documentation]
+* https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a[Getting started with RHOSAK] 
+
+==== GUI deployment 
+
+In this demo, we will simulate both "Edge" and "Core" kafka instances using a single RHOSAK Kafka instance. 
+
+// what about topics 
+// what about mirror maker 
+
+*Kafka instance:*
+
+0. Log into Red Hat OpenShift Streams for Apache Kafa at https://console.redhat.com/application-services/streams/
+1. Go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
+2. Enter a name for this instance. Something like `sc-kafka` and select a region. 
+3. Click *Create instance*. 
+4. Wait a few minutes until *Status* is *Ready*.
+
+*Create topics:*
+
+
