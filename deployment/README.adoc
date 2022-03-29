@@ -77,18 +77,47 @@ Red Hat OpenShift Streams for Apache Kafka's product documentation page contains
 
 In this demo, we will simulate both "Edge" and "Core" kafka instances using a single RHOSAK Kafka instance. 
 
-// what about topics 
-// what about mirror maker 
-
 *Kafka instance:*
 
 0. Log into Red Hat OpenShift Streams for Apache Kafa at https://console.redhat.com/application-services/streams/
 1. Go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
-2. Enter a name for this instance. Something like `sc-kafka` and select a region. 
+2. Enter the name as `core-kafka` and select a region. 
 3. Click *Create instance*. 
 4. Wait a few minutes until *Status* is *Ready*.
 
-*Create topics:*
+*Create lpr topic:*
+
+1. Once your Kafka isntance's *Status* is *Ready*, click the instance name and select *Topics* from the horizontal tabs at the top. 
+2. Select "Create topic".
+3. On the *Create topic* screen, enter a *Topic name* and click *Next*. We are naming our topic: `lpr`
+4. Increase partitions to 3 using the plus sign and select *Next*.
+5. Select a *Retention time* of *A day* with size *Unlimited*. (Keep in mind, RHOSAK free instances are only available for 2 days). Click *Next*. 
+6. *Replicas* should be automatically set to 3 with *Minimum in-sync replicas* set to 2. Click *Finish*. 
+
+*Copy connection details* 
+
+0. Return to the *Kafka Instances* view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
+
+_Create a Service Account:_
+1. Under *Service accounts*, select *Create service account*. 
+2. Provide a short description, i.e.`sa-kafka-smart-city-lpr` and select *Create* 
+3. Copy and save both the *Client ID* and the *Client secret*. You will need these later. 
+4. Check *I have copied the client ID and secret* and click *Close*. 
+
+_Copy bootstrap server  & token endpoint info:_
+5. Before closing the pane, copy and save the *Bootstrap server* details. 
+6. Copy and save *Token endpoint URL* before closing the page.
+
+////
+*Create lpr-core topic:* 
+1. Follow instructions above to create a second topic. Use the same configurations while substituting the topic name for `lpr-core`
+
+*Connection information:*
+1. Return to the *Kafka Instances* by selecting *Kafka Instances* on left side of your screen
+2. Find your Kafka 
+
+////
+
 
 === LPR Service
 
