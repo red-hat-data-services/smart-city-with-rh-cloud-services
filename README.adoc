@@ -1,0 +1,20 @@
+= Smart City, an Edge-to-Core scenario
+
+NOTE: This repo is an adapted version of the original link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo2-smart-city[Smart City demo], using Red Hat Cloud Services RHOSAK and RHODA instead of locally deployed elements.
+
+== Scenario
+
+In this demo, we show how to implement this scenario:
+
+* Using a trained ML model, licence plates are recognized at toll location.
+* Data (plate number, location, timestamp) is send from toll locations (edge) to the core using Kafka mirroring to handle communication issues and recovery.
+* Incoming data is screened real-time to trigger alerts for wanted vehicles (Amber Alert).
+* Data is aggregated and stored into object storage.
+* A central database contains other information coming from licence registry system: car model, color,...
+* Data analysis leveraging Presto and Superset is done against stored data.
+
+link:doc/full-description.adoc[Full scenario description and architecture]
+
+== Deployment
+
+All the instructions to deploy the environment and the scenario can be found link:deployment/README.adoc[here]
