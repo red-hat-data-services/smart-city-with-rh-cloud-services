@@ -124,7 +124,7 @@ We will now create Secrets using the connection information copied in the previo
 cp deployment/files/kafka/rhosak-secret.yaml deployment/files/kafka/rhosak-secret.yaml.env
 ----
 2. Use an editor to relace the relevant connection strings (`ENTER_*`) in `deployment/files/kafka/rhosak-secret.yaml.env`. 
-3. Use the oc to apply changes
+3. Use oc to apply changes
 [source,bash]
 ----
 oc apply -f deployment/files/kafka/rhosak-secret.yaml.env
