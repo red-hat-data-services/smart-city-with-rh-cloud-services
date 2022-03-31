@@ -99,12 +99,14 @@ In this demo, we will simulate both "Edge" and "Core" kafka instances using a si
 0. Return to the *Kafka Instances* (on the left, *Streams for Apache Kafka* > *Kafka Instances*) view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
 
 _Create a Service Account:_
+
 1. Under *Service accounts*, select *Create service account*. 
 2. Provide a short description, i.e.`sa-kafka-smart-city-lpr` and select *Create* 
 3. Copy and save both the *Client ID* and the *Client secret*. You will need these later. 
 4. Check *I have copied the client ID and secret* and click *Close*. 
 
 _Copy bootstrap server  & token endpoint info:_
+
 5. Before closing the pane, copy and save the *Bootstrap server* details. 
 6. Copy and save *Token endpoint URL* before closing the page.
 
