@@ -60,9 +60,11 @@ IMPORTANT: Before you apply `job_seed_database.yaml` make sure the build process
 
 TODO: RHOSAK instructions to create topics and Mirror Maker (possible?)
 
+////
 * `kafka/edge-topic.yaml`: Edge topic
 * `kafka/core-topic.yaml`: Core topic
 * `kafka/mirror-maker.yaml`: Mirror maker
+////
 
 ==== GUI deployment 
 
@@ -77,26 +79,24 @@ Red Hat OpenShift Streams for Apache Kafka's product documentation page contains
 
 In this demo, we will simulate both "Edge" and "Core" kafka instances using a single RHOSAK Kafka instance. 
 
-*Kafka instance:*
+===== Kafka instance
 
 0. Log into Red Hat OpenShift Streams for Apache Kafa at https://console.redhat.com/application-services/streams/
-1. Go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
-2. Enter the name as `core-kafka` and select a region. 
-3. Click *Create instance*. 
-4. Wait a few minutes until *Status* is *Ready*.
+1. This should bring you to the right screen, but if it doesn't, go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
+2. Enter the name as `sc-kafka`, select a region, and click *Create instance*. 
+3. Wait a few minutes until *Status* is *Ready*.
 
-*Create lpr topic:*
+===== Create lpr topic
 
-1. Once your Kafka isntance's *Status* is *Ready*, click the instance name and select *Topics* from the horizontal tabs at the top. 
-2. Select "Create topic".
-3. On the *Create topic* screen, enter a *Topic name* and click *Next*. We are naming our topic: `lpr`
-4. Increase partitions to 3 using the plus sign and select *Next*.
+1. Once your Kafka isntance's *Status* is *Ready*, click the instance name (`sc-kafka` hyperlink) and select *Topics* from the horizontal tabs at the top. 
+2. Select *Create topic*, enter `lpr` as your *Topic name* and click *Next*.
+4. Increase partitions to `3` using the plus sign and select *Next*.
 5. Select a *Retention time* of *A day* with size *Unlimited*. (Keep in mind, RHOSAK free instances are only available for 2 days). Click *Next*. 
 6. *Replicas* should be automatically set to 3 with *Minimum in-sync replicas* set to 2. Click *Finish*. 
 
-*Copy connection details* 
+===== Copy connection details
 
-0. Return to the *Kafka Instances* view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
+0. Return to the *Kafka Instances* (on the left, *Streams for Apache Kafka* > *Kafka Instances*) view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
 
 _Create a Service Account:_
 1. Under *Service accounts*, select *Create service account*. 
@@ -117,6 +117,9 @@ _Copy bootstrap server  & token endpoint info:_
 2. Find your Kafka 
 
 ////
+
+===== Add Secrets to OpenShift
+
 
 
 === LPR Service
