@@ -81,10 +81,10 @@ In this demo, we will simulate both "Edge" and "Core" kafka instances using a si
 
 ===== Kafka instance
 
-0. Log into Red Hat OpenShift Streams for Apache Kafa at https://console.redhat.com/application-services/streams/
-1. This should bring you to the right screen, but if it doesn't, go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
-2. Enter the name as `sc-kafka`, select a region, and click *Create instance*. 
-3. Wait a few minutes until *Status* is *Ready*.
+1. Log into Red Hat OpenShift Streams for Apache Kafa at https://console.redhat.com/application-services/streams/
+2. This should bring you to the right screen, but if it doesn't, go to *Streams for Apache Kafka* > *Kafka Instances* and click *Create Kafka Instance* 
+3. Enter the name as `sc-kafka`, select a region, and click *Create instance*. 
+4. Wait a few minutes until *Status* is *Ready*.
 
 ===== Create lpr topic
 
@@ -96,19 +96,13 @@ In this demo, we will simulate both "Edge" and "Core" kafka instances using a si
 
 ===== Copy connection details
 
-0. Return to the *Kafka Instances* (on the left, *Streams for Apache Kafka* > *Kafka Instances*) view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
-
-_Create a Service Account:_
-
-1. Under *Service accounts*, select *Create service account*. 
-2. Provide a short description, i.e.`sa-kafka-smart-city-lpr` and select *Create* 
-3. Copy and save both the *Client ID* and the *Client secret*. You will need these later. 
-4. Check *I have copied the client ID and secret* and click *Close*. 
-
-_Copy bootstrap server  & token endpoint info:_
-
-5. Before closing the pane, copy and save the *Bootstrap server* details. 
-6. Copy and save *Token endpoint URL* before closing the page.
+1. Return to the *Kafka Instances* (on the left, *Streams for Apache Kafka* > *Kafka Instances*) view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
+2. Under *Service accounts*, select *Create service account*. 
+3. Provide a short description, i.e.`sa-kafka-smart-city-lpr` and select *Create* 
+4. Copy and save both the *Client ID* and the *Client secret*. You will need these later. 
+5. Check *I have copied the client ID and secret* and click *Close*. 
+6. Before closing the pane, copy and save the *Bootstrap server* details. 
+7. Copy and save *Token endpoint URL* before closing the page.
 
 ////
 *Create lpr-core topic:* 
@@ -122,7 +116,19 @@ _Copy bootstrap server  & token endpoint info:_
 
 ===== Add Secrets to OpenShift
 
+We will now create Secrets using the connection information copied in the previous step. We will edit a copied template file using the following steps.
 
+1. From the directory containing this README file, run: 
+[source,bash]
+----
+cp deployment/files/kafka/rhosak-secret.yaml deployment/files/kafka/rhosak-secret.yaml.env
+----
+2. Use an editor to relace the relevant connection strings (`ENTER_*`) in `deployment/files/kafka/rhosak-secret.yaml.env`. 
+3. Use the oc to apply changes
+[source,bash]
+----
+oc apply -f deployment/files/kafka/rhosak-secret.yaml.env
+----
 
 === LPR Service
 
