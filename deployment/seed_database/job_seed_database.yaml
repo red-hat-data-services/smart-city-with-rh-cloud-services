@@ -13,11 +13,11 @@ spec:
     spec:
       containers:
         - name: seed-database
-          image: seed-database:latest
+          image: quay.io/smart-city-with-rh-cloud-services/seed-database:latest
           imagePullPolicy: Always
           env:
             - name: DB_HOST
-              value: "smartcity-db-service"
+              value: "postgresql"
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
@@ -36,5 +36,5 @@ spec:
             - name: TABLE_NAME
               value: vehicle_metadata
             - name: VEHICLE_METADATA_DB_URL
-              value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/main/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json
+              value: https://github.com/red-hat-data-services/smart-city-with-rh-cloud-services/raw/main/source/SC_Seed_Database/vehicle_metadata_db.json
       restartPolicy: Never
