@@ -6,6 +6,7 @@
 == Requirements
 
 TODO: Review
+
 * A working OpenShift environment. Last tested version: 4.9
 * Cluster-admin access to OpenShift, or ability to deploy operators.
 * The image-registry Operator needs to be setup and working
@@ -18,6 +19,8 @@ TODO: To be rewritten.
 
 == Manual install
 
+NOTE: In those instructions, all commands are run from the `deployment` folder.
+
 === Namespace
 
 Create an OpenShift project/namespace to deploy the environment. In this documentation we'll use `smartcity`.
@@ -27,44 +30,21 @@ Create an OpenShift project/namespace to deploy the environment. In this documen
 oc new-project smartcity
 ----
 
-TIP: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the config files used for the deployment.
-
-=== Deployment
-
-From the `deploy` folder and subfolders, create the OpenShift resources in this order.
-
-.Creating a resource
-[source,bash]
-----
-oc apply -f file.yaml
-----
+WARNING: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the files used for the deployment.
 
 === Database
 
 We will need a database to store informations about the workflow, as well as registration information for the vehicles. You can edit the Secret file if you want change the default values.
 
-Deploying PostgreSQL DB
-
 TODO: Instructions for RHODA
 
-Deploying Seed Database to initialize the database with the registration informations.
-
-* `database/seed_database/is_seed_database.yaml`: ImageStream for the image that will be used to see the DB
-* `database/seed_database/bc_seed_database.yaml`: BuildConfiguration for the image
-
-IMPORTANT: Before you apply `job_seed_database.yaml` make sure the build process (from the last step) has been completed, else seed job will complain until the image is not ready.
-
-* `database/seed_database/job_seed_database.yaml`: Seeding Job to initialize the DB
+.Seed the database
+[source,bash]
+----
+oc apply -f seed_database/job_seed_database.yaml
+----
 
 === Kafka
-
-TODO: RHOSAK instructions to create topics and Mirror Maker (possible?)
-
-////
-* `kafka/edge-topic.yaml`: Edge topic
-* `kafka/core-topic.yaml`: Core topic
-* `kafka/mirror-maker.yaml`: Mirror maker
-////
 
 ==== GUI deployment 
 
@@ -90,9 +70,9 @@ In this demo, we will simulate both "Edge" and "Core" kafka instances using a si
 
 1. Once your Kafka isntance's *Status* is *Ready*, click the instance name (`sc-kafka` hyperlink) and select *Topics* from the horizontal tabs at the top. 
 2. Select *Create topic*, enter `lpr` as your *Topic name* and click *Next*.
-4. Increase partitions to `3` using the plus sign and select *Next*.
-5. Select a *Retention time* of *A day* with size *Unlimited*. (Keep in mind, RHOSAK free instances are only available for 2 days). Click *Next*. 
-6. *Replicas* should be automatically set to 3 with *Minimum in-sync replicas* set to 2. Click *Finish*. 
+3. Increase partitions to `3` using the plus sign and select *Next*.
+4. Select a *Retention time* of *A day* with size *Unlimited*. (Keep in mind, RHOSAK free instances are only available for 2 days). Click *Next*. 
+5. *Replicas* should be automatically set to 3 with *Minimum in-sync replicas* set to 2. Click *Finish*. 
 
 ===== Copy connection details
 
@@ -132,21 +112,24 @@ oc apply -f deployment/files/kafka/rhosak-secret.yaml.env
 
 === LPR Service
 
-This component presents an API that you can query with an image and returns the infered licence plate number.
+This component presents an API that you can query by sending an image. It will return the infered licence plate number.
 
-* `lpr_service/is_lpr_service.yaml`: ImageStream for the LPR service
-* `lpr_service/bc_lpr_service.yaml`: BuildConfiguration for the LPR service
-* `lpr_service/dc_lpr_service.yaml`: Deployment Configuration for the LPR service
-* `lpr_service/svc_lpr_service.yaml`: Service to access the LPR service
-
+.Create the LPR deployment and service
+[source,bash]
+----
+oc apply -f lpr_service/deployment_lpr_service.yaml
+oc apply -f lpr_service/svc_lpr_service.yaml
+----
 
 === Events Service
 
 This is the component that runs in the Core and listens to incoming Kafka events to write them into a PostgreSQL database so that they can be queried to create the dashboards.
 
-* `events_service/is_events_service.yaml`: ImageStream for the event service
-* `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
-* `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
+.Create Events Service
+[source,bash]
+----
+oc apply -f lpr_service/deployment_lpr_service.yaml
+----
 
 === Image Server
 
@@ -170,6 +153,17 @@ This is the component that injects car images into the pipeline.
 * `generator/is_generator.yaml`: ImageStream for the load generator
 * `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
 * `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+
+=== Ceph Nano
+
+We will use Ceph Nano to provide object storage to hold the source images that will be injected in the pipeline, and the events that will be generated.
+
+.Deploy Ceh Nano
+[source,bash]
+----
+oc apply -k ceph_nano/scc
+oc apply -k ceph_nano/nano
+----
 
 === Dataset
 

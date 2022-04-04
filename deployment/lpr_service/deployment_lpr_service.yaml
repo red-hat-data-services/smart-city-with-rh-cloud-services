@@ -1,0 +1,37 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lpr-service
+  labels:
+    app: lpr-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lpr-service
+      deployment: lpr-service
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lpr-service
+        deployment: lpr-service
+    spec:
+      containers:
+        - name: lpr-service
+          image: quay.io/smart-city-with-rh-cloud-services/lpr-service
+          env:
+            - name: MAX_WORKERS
+              value: "1"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
