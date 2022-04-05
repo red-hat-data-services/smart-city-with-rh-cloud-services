@@ -76,7 +76,7 @@ In this demo, we will simulate both "Edge" and "Core" kafka instances using a si
 
 ===== Copy connection details
 
-Red Hat OpenShift Streams for Apache Kafka instances use the *bootstrap server* and authenticate connections using *service account credentials*. This section shows you where to get this information so you can secure your applications. 
+Red Hat OpenShift Streams for Apache Kafka instances use the *bootstrap server* to create a connection. We authenticate connections using *service account credentials*. This section shows you where to get this information so you can secure your applications. 
 
 1. Return to the *Kafka Instances* (on the left, *Streams for Apache Kafka* > *Kafka Instances*) view and select the vertical dots on the right side of your kafka instance listing. Select *Connection*.
 2. Under *Service accounts*, select *Create service account*. 
@@ -111,6 +111,19 @@ cp deployment/files/kafka/rhosak-secret.yaml deployment/files/kafka/rhosak-secre
 ----
 oc apply -f deployment/files/kafka/rhosak-secret.yaml.env
 ----
+
+===== Using connection secrets in our application
+
+We pushed our RHOSAK connection information to our OpenShift cluster in the last section. We can now use this information to securely connect our Kafka instance to our Smart City application. 
+
+The bootstrap server is used to make an initial connection to our RHOSAK Kafka instance. There are two mechanisms for authentication:
+
+1. *SASL/OAUTHBEARER* (_recommended_)
+2. *SASL/PLAIN* 
+
+*SASL/OAUTHBEARER* uses the service account we created and the token endpoint url to authenticate our smarty city application with the Kafka instance. *SASL/PLAIN* uses our service account Client ID and Client Secret strings as username and password credentials. 
+
+//We will use SASL/OAUTHBEARER to connect to this instance.
 
 === LPR Service
 
